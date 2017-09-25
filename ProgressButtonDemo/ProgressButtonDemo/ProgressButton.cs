@@ -28,7 +28,6 @@ namespace ProgressButtonDemo
             this.Click += OnClick;
         }
 
-
         public event EventHandler StateChanged;
 
         protected virtual void OnStateChanged(ProgressState oldValue, ProgressState newValue)
@@ -38,6 +37,11 @@ namespace ProgressButtonDemo
 
         protected virtual void OnProgressChanged(double oldValue, double newValue)
         {
+            if (newValue < 0)
+                newValue = 0;
+
+            if (newValue > 1)
+                newValue = 1;
         }
 
         private void OnClick(object sender, RoutedEventArgs e)
@@ -50,6 +54,7 @@ namespace ProgressButtonDemo
                 case ProgressState.Started:
                     break;
                 case ProgressState.Completed:
+                    this.State = ProgressState.Normal;
                     break;
                 case ProgressState.Faulted:
                     this.State = ProgressState.Normal;

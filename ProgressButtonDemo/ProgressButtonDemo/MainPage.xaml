@@ -12,11 +12,14 @@
                           OnContent="True"
                           OffContent="False"
                           Margin="0,0,0,20"
-                          x:Name="ThrowExceptionElement" />
+                          x:Name="ThrowExceptionElement"
+                          HorizontalAlignment="Center" />
             <local:ProgressButton Content="Download"
                                   HorizontalAlignment="Center"
                                   x:Name="ProgressButton"
                                   StateChanged="OnStateChanged" />
+            <TextBlock Text="{Binding ElementName=ProgressButton,Path=Progress}"
+                       HorizontalAlignment="Center" />
         </StackPanel>
     </Grid>
 </Page>

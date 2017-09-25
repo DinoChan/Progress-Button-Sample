@@ -71,13 +71,9 @@ namespace ProgressButtonDemo
     {
         public event EventHandler<double> ProgressChanged;
 
-
-
         public bool IsFaulted { get; private set; }
 
         public bool IsCompleted { get; private set; }
-
-
 
         public async Task Start(bool throwException = false)
         {
@@ -87,12 +83,11 @@ namespace ProgressButtonDemo
                 await Task.Delay(500);
                 progress += 0.1;
                 ProgressChanged?.Invoke(this, progress);
+                if (progress > 0.7 && throwException)
+                    throw new Exception("test");
             }
-            if (throwException)
-                throw new Exception("test");
 
             IsCompleted = true;
         }
-
     }
 }
