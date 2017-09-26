@@ -41,7 +41,7 @@ namespace ProgressButtonDemo
         {
             switch (ProgressButton.State)
             {
-                case ProgressState.Normal:
+                case ProgressState.Ready:
                     break;
                 case ProgressState.Started:
                     try

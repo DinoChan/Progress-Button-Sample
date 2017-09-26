@@ -23,7 +23,7 @@ namespace ProgressButtonDemo
         /// 标识 State 依赖属性。
         /// </summary>
         public static readonly DependencyProperty StateProperty =
-            DependencyProperty.Register("State", typeof(ProgressState), typeof(ProgressButton), new PropertyMetadata(ProgressState.Normal, OnStateChanged));
+            DependencyProperty.Register("State", typeof(ProgressState), typeof(ProgressButton), new PropertyMetadata(ProgressState.Ready, OnStateChanged));
 
         private static void OnStateChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {

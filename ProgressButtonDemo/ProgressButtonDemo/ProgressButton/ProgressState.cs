@@ -8,7 +8,7 @@ namespace ProgressButtonDemo
 {
     public enum ProgressState
     {
-        Normal,
+        Ready,
         Started,
         //Paused,
         Completed,
