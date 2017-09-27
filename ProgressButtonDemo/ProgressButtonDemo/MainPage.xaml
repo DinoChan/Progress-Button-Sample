@@ -17,10 +17,13 @@
             <local:ProgressButton Content="Download"
                                   HorizontalAlignment="Center"
                                   x:Name="ProgressButton"
-                                  StateChanged="OnStateChanged" FontSize="30"
-                                  Padding="30,4"/>
+                                  BorderThickness="5"
+                                 BorderBrush="#FFCCCCCC"
+                                  StateChanged="OnStateChanged" FontSize="100"
+                                  Padding="35,10"/>
             <TextBlock Text="{Binding ElementName=ProgressButton,Path=Progress}"
                        HorizontalAlignment="Center" />
+           
         </StackPanel>
     </Grid>
 </Page>

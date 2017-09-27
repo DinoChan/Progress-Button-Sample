@@ -29,6 +29,7 @@ namespace ProgressButtonDemo
         }
 
         public event EventHandler StateChanged;
+        public event EventHandler<ExtendPropertyChangingEventArgs> StateChanging;
 
         protected override void OnApplyTemplate()
         {
@@ -41,7 +42,7 @@ namespace ProgressButtonDemo
             if (newValue == ProgressState.Ready)
                 Progress = 0;
 
-            this.IsHitTestVisible = this.State != ProgressState.Started;
+            //this.IsHitTestVisible = this.State != ProgressState.Started;
             UpdateVisualStates(true);
 
             StateChanged?.Invoke(this, EventArgs.Empty);
@@ -50,10 +51,10 @@ namespace ProgressButtonDemo
         protected virtual void OnProgressChanged(double oldValue, double newValue)
         {
             if (newValue < 0)
-                newValue = 0;
+                Progress = 0;
 
             if (newValue > 1)
-                newValue = 1;
+                Progress = 1;
         }
 
         private void OnClick(object sender, RoutedEventArgs e)
@@ -61,15 +62,15 @@ namespace ProgressButtonDemo
             switch (State)
             {
                 case ProgressState.Ready:
-                    this.State = ProgressState.Started;
+                    ChangeStateCore(ProgressState.Started);
                     break;
                 case ProgressState.Started:
                     break;
                 case ProgressState.Completed:
-                    this.State = ProgressState.Ready;
+                    ChangeStateCore(ProgressState.Ready);
                     break;
                 case ProgressState.Faulted:
-                    this.State = ProgressState.Ready;
+                    ChangeStateCore(ProgressState.Ready);
                     break;
                 default:
                     break;
@@ -100,6 +101,19 @@ namespace ProgressButtonDemo
             VisualStateManager.GoToState(this, progressState, useTransitions);
             //if (IsHitTestVisible == false && IsEnabled)
             //    VisualStateManager.GoToState(this, "Normal", false);
+        }
+
+        private void ChangeStateCore(ProgressState newstate)
+        {
+            if (StateChanging != null)
+            {
+                var args = new ExtendPropertyChangingEventArgs(nameof(State));
+                StateChanging(this, args);
+                if (args.Cancel)
+                    return;
+            }
+
+            State = newstate;
         }
 
     }
