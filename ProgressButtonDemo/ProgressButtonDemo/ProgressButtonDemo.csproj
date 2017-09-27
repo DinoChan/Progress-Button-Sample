@@ -100,6 +100,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ProgressButton\AdjustToSquareBehavior.cs" />
+    <Compile Include="ProgressButton\EllipseProgressBehavior.cs" />
     <Compile Include="ProgressButton\ProgressButton.Constants.cs" />
     <Compile Include="ProgressButton\ProgressButton.cs" />
     <Compile Include="ProgressButton\ProgressState.cs" />

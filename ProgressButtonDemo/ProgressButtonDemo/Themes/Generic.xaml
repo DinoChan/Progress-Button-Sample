@@ -77,7 +77,7 @@
                                                       To="Started">
                                         <Storyboard>
                                             <DoubleAnimation BeginTime="0:0:0.0"
-                                                             Duration="0:0:0.2"
+                                                             Duration="0:0:0.1"
                                                              To="0"
                                                              Storyboard.TargetProperty="(UIElement.Opacity)"
                                                              Storyboard.TargetName="ContentPresenter">
@@ -86,7 +86,7 @@
                                                 </DoubleAnimation.EasingFunction>
                                             </DoubleAnimation>
                                             <DoubleAnimation BeginTime="0:0:0"
-                                                             Duration="0:0:0.5"
+                                                             Duration="0:0:0.7"
                                                              To="1"
                                                              Storyboard.TargetProperty="(local:RectangleToEllipseBehavior.Progress)"
                                                              Storyboard.TargetName="RectangleToEllipseBehavior"
@@ -96,7 +96,7 @@
                                                 </DoubleAnimation.EasingFunction>
                                             </DoubleAnimation>
                                             <DoubleAnimation BeginTime="0:0:0"
-                                                             Duration="0:0:0.5"
+                                                             Duration="0:0:0.7"
                                                              To="1"
                                                              Storyboard.TargetProperty="(local:AdjustToSquareBehavior.Percentage)"
                                                              Storyboard.TargetName="AdjustToSquareBehavior"
@@ -107,7 +107,88 @@
                                             </DoubleAnimation>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
                                                                            Storyboard.TargetName="ContentPresenter">
-                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.2">
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.7">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimation BeginTime="0:0:0.7"
+                                                             Duration="0:0:0.2"
+                                                             To="1"
+                                                             Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                             Storyboard.TargetName="Ellipse">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                        </Storyboard>
+                                    </VisualTransition>
+                                    <VisualTransition GeneratedDuration="0"
+                                                      To="Completed">
+                                        <Storyboard>
+                                            <DoubleAnimation BeginTime="0:0:0.0"
+                                                             Duration="0:0:0.2"
+                                                             To="1"
+                                                             Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                             Storyboard.TargetName="CompletedElement">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                           
+                                        </Storyboard>
+                                    </VisualTransition>
+                                    <VisualTransition GeneratedDuration="0"
+                                                      To="Faulted">
+                                        <Storyboard>
+                                            <DoubleAnimation BeginTime="0:0:0.0"
+                                                             Duration="0:0:0.2"
+                                                             To="1"
+                                                             Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                             Storyboard.TargetName="FaultedElement">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+
+                                        </Storyboard>
+                                    </VisualTransition>
+                                    <VisualTransition GeneratedDuration="0"
+                                                      To="Ready">
+                                        <Storyboard>
+                                            <DoubleAnimation BeginTime="0:0:0.5"
+                                                             Duration="0:0:0.2"
+                                                             To="1"
+                                                             Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                             Storyboard.TargetName="ContentPresenter">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <DoubleAnimation BeginTime="0:0:0"
+                                                             Duration="0:0:0.7"
+                                                             To="0"
+                                                             Storyboard.TargetProperty="(local:RectangleToEllipseBehavior.Progress)"
+                                                             Storyboard.TargetName="RectangleToEllipseBehavior"
+                                                             EnableDependentAnimation="True">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <QuinticEase EasingMode="EaseOut" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <DoubleAnimation BeginTime="0:0:0"
+                                                             Duration="0:0:0.7"
+                                                             To="0"
+                                                             Storyboard.TargetProperty="(local:AdjustToSquareBehavior.Percentage)"
+                                                             Storyboard.TargetName="AdjustToSquareBehavior"
+                                                             EnableDependentAnimation="True">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <QuinticEase EasingMode="EaseOut" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                           Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.5">
                                                     <DiscreteObjectKeyFrame.Value>
                                                         <Visibility>Visible</Visibility>
                                                     </DiscreteObjectKeyFrame.Value>
@@ -120,44 +201,94 @@
                                 <VisualState x:Name="Started">
                                     <VisualState.Setters>
                                         <Setter Target="RectangleToEllipseBehavior.(local:RectangleToEllipseBehavior.Progress)"
-                                            Value="1" />
+                                                Value="1" />
                                         <Setter Target="AdjustToSquareBehavior.(local:AdjustToSquareBehavior.Percentage)"
                                                 Value="1" />
                                         <Setter Target="ContentPresenter.(UIElement.Opacity)"
                                                 Value="0" />
+                                        <Setter Target="Ellipse.(UIElement.Opacity)"
+                                                Value="1" />
                                         <Setter Target="ContentPresenter.Visibility"
-                                                Value="Visible" />
+                                                Value="Collapsed" />
                                     </VisualState.Setters>
 
                                 </VisualState>
-                                <VisualState x:Name="Completed"/>
-                                <VisualState x:Name="Faulted"/>
+                                <VisualState x:Name="Completed">
+                                    <VisualState.Setters>
+                                        <Setter Target="RectangleToEllipseBehavior.(local:RectangleToEllipseBehavior.Progress)"
+                                                Value="1" />
+                                        <Setter Target="AdjustToSquareBehavior.(local:AdjustToSquareBehavior.Percentage)"
+                                                Value="1" />
+                                        <Setter Target="ContentPresenter.(UIElement.Opacity)"
+                                                Value="0" />
+                                        <Setter Target="CompletedElement.(UIElement.Opacity)"
+                                                Value="1" />
+                                        <Setter Target="Ellipse.(UIElement.Opacity)"
+                                                Value="1" />
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="Faulted">
+                                    <VisualState.Setters>
+                                        <Setter Target="RectangleToEllipseBehavior.(local:RectangleToEllipseBehavior.Progress)"
+                                                Value="1" />
+                                        <Setter Target="AdjustToSquareBehavior.(local:AdjustToSquareBehavior.Percentage)"
+                                                Value="1" />
+                                        <Setter Target="ContentPresenter.(UIElement.Opacity)"
+                                                Value="0" />
+                                        <Setter Target="FaultedElement.(UIElement.Opacity)"
+                                                Value="1" />
+                                        <Setter Target="Ellipse.(UIElement.Opacity)"
+                                                Value="1" />
+                                    </VisualState.Setters>
+                                </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Grid >
+                        <Grid  >
                             <interactivity:Interaction.Behaviors>
-                                <local:AdjustToSquareBehavior x:Name="AdjustToSquareBehavior"
+                                <local:AdjustToSquareBehavior x:Name="AdjustToSquareBehavior" 
                                                                   ContentElement="{Binding ElementName=InnerGrid}"
                                                                   Percentage="0" />
                             </interactivity:Interaction.Behaviors>
-                            <Grid x:Name="InnerGrid">
+                            <Grid x:Name="InnerGrid"  >
                                 <Rectangle x:Name="Rectangle"
-                                   StrokeThickness="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=BorderThickness,Converter={StaticResource BorderToStrokeThicknessConverter}}"
-                                   Stroke="{TemplateBinding BorderBrush}"
-                                   Fill="{TemplateBinding Background}"
-                                 >
+                                           StrokeThickness="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=BorderThickness,Converter={StaticResource BorderToStrokeThicknessConverter}}"
+                                           Stroke="{TemplateBinding BorderBrush}"
+                                           Fill="{TemplateBinding Background}">
                                     <interactivity:Interaction.Behaviors>
                                         <local:RectangleToEllipseBehavior x:Name="RectangleToEllipseBehavior"/>
                                     </interactivity:Interaction.Behaviors>
                                 </Rectangle>
-                                <ContentPresenter x:Name="ContentPresenter"
-                                          Content="{TemplateBinding Content}"
-                                          ContentTransitions="{TemplateBinding ContentTransitions}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          Padding="{TemplateBinding Padding}"
-                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          AutomationProperties.AccessibilityView="Raw" />
+                                <Ellipse x:Name="Ellipse" Stroke="LightSeaGreen" 
+                                         StrokeThickness="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=BorderThickness,Converter={StaticResource BorderToStrokeThicknessConverter}}"
+                                         Opacity="0"
+                                         RenderTransformOrigin="0.5,0.5">
+                                    <interactivity:Interaction.Behaviors>
+                                        <local:EllipseProgressBehavior Progress="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Progress}"/>
+                                    </interactivity:Interaction.Behaviors>
+                                    <Ellipse.RenderTransform>
+                                        <RotateTransform Angle="-90"/>
+                                    </Ellipse.RenderTransform>
+                                </Ellipse>
+                                <Grid x:Name="CompletedElement"  Opacity="0">
+                                    <Ellipse x:Name="CompletedRectangle"
+                                           Fill="LightSeaGreen"/>
+                                    <FontIcon/>
+                                </Grid>
+                                <Grid x:Name="FaultedElement"  Opacity="0">
+                                    <Ellipse Fill="MediumVioletRed"/>
+                                    <FontIcon/>
+                                </Grid>
+                                <Grid  Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter x:Name="ContentPresenter"
+                                                      Content="{TemplateBinding Content}"
+                                                      ContentTransitions="{TemplateBinding ContentTransitions}"
+                                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                      AutomationProperties.AccessibilityView="Raw" />
+                                </Grid>
+
                             </Grid>
                         </Grid>
                     </Grid>

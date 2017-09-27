@@ -102,17 +102,27 @@ namespace ProgressButtonDemo
             if (_originalSize.Width == 0 || _originalSize.Height == 0 || double.IsNaN(Percentage))
                 return;
 
+            if (Percentage == 0)
+            {
+                AssociatedObject.Height = double.NaN;
+                AssociatedObject.Width = double.NaN;
+                return;
+            }
+
 
             var width = _originalSize.Width;
             var height = _originalSize.Height;
             if (width > height)
             {
                 AssociatedObject.Width = width - (width - height) * Percentage;
+                AssociatedObject.Height = height;
             }
             else
             {
                 AssociatedObject.Height = height - (height - width) * Percentage;
+                AssociatedObject.Width = width;
             }
+            
         }
     }
 }

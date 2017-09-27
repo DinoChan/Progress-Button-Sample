@@ -38,10 +38,13 @@ namespace ProgressButtonDemo
 
         protected virtual void OnStateChanged(ProgressState oldValue, ProgressState newValue)
         {
-            StateChanged?.Invoke(this, EventArgs.Empty);
+            if (newValue == ProgressState.Ready)
+                Progress = 0;
 
             this.IsHitTestVisible = this.State != ProgressState.Started;
             UpdateVisualStates(true);
+
+            StateChanged?.Invoke(this, EventArgs.Empty);
         }
 
         protected virtual void OnProgressChanged(double oldValue, double newValue)

@@ -17,7 +17,8 @@
             <local:ProgressButton Content="Download"
                                   HorizontalAlignment="Center"
                                   x:Name="ProgressButton"
-                                  StateChanged="OnStateChanged" />
+                                  StateChanged="OnStateChanged" FontSize="30"
+                                  Padding="30,4"/>
             <TextBlock Text="{Binding ElementName=ProgressButton,Path=Progress}"
                        HorizontalAlignment="Center" />
         </StackPanel>

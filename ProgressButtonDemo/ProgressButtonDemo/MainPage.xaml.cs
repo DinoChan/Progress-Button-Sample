@@ -78,10 +78,11 @@ namespace ProgressButtonDemo
         public async Task Start(bool throwException = false)
         {
             double progress = 0;
+            await Task.Delay(1000);
             while (progress < 1)
             {
-                await Task.Delay(500);
-                progress += 0.1;
+                await Task.Delay(100);
+                progress += 0.03;
                 ProgressChanged?.Invoke(this, progress);
                 if (progress > 0.7 && throwException)
                     throw new Exception("test");
