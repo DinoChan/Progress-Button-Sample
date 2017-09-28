@@ -10,7 +10,6 @@ namespace ProgressButtonDemo
     {
         Ready,
         Started,
-        //Paused,
         Completed,
         Faulted,
     }
