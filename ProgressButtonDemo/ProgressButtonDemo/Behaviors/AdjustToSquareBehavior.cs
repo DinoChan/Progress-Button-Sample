@@ -11,7 +11,7 @@ using Microsoft.Xaml.Interactivity;
 
 namespace ProgressButtonDemo
 {
-    public class AdjustToSquareBehavior : Behavior<Panel>
+    public class AdjustToSquareBehavior : ProgressBehavior<Panel>
     {
         private Size _originalSize;
 
@@ -47,7 +47,7 @@ namespace ProgressButtonDemo
             if (newValue != null)
             {
                 newValue.SizeChanged += OnContentElementSizeChanged;
-                if (Percentage == 0)
+                if (Progress == 0)
                     _originalSize = newValue.RenderSize;
             }
 
@@ -55,42 +55,18 @@ namespace ProgressButtonDemo
 
         private void OnContentElementSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (Percentage == 0)
+            if (Progress == 0)
                 _originalSize = e.NewSize;
 
             UpdateTargetSize();
         }
 
-
-        /// <summary>
-        /// 获取或设置Percentage的值
-        /// </summary>  
-        public double Percentage
-        {
-            get { return (double)GetValue(PercentageProperty); }
-            set { SetValue(PercentageProperty, value); }
-        }
-
-        /// <summary>
-        /// 标识 Percentage 依赖属性。
-        /// </summary>
-        public static readonly DependencyProperty PercentageProperty =
-            DependencyProperty.Register("Percentage", typeof(double), typeof(AdjustToSquareBehavior), new PropertyMetadata(1d, OnPercentageChanged));
-
-        private static void OnPercentageChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
-        {
-            AdjustToSquareBehavior target = obj as AdjustToSquareBehavior;
-            double oldValue = (double)args.OldValue;
-            double newValue = (double)args.NewValue;
-            if (oldValue != newValue)
-                target.OnPercentageChanged(oldValue, newValue);
-        }
-
-        protected virtual void OnPercentageChanged(double oldValue, double newValue)
+        protected override void OnProgressChanged(double oldValue, double newValue)
         {
             UpdateTargetSize();
         }
 
+     
         private void UpdateTargetSize()
         {
             if (ContentElement == null)
@@ -99,7 +75,7 @@ namespace ProgressButtonDemo
             if (AssociatedObject == null)
                 return;
 
-            if (_originalSize.Width == 0 || _originalSize.Height == 0 || double.IsNaN(Percentage))
+            if (_originalSize.Width == 0 || _originalSize.Height == 0 || double.IsNaN(Progress))
                 return;
 
             //if (Percentage == 0)
@@ -114,12 +90,12 @@ namespace ProgressButtonDemo
             var height = _originalSize.Height;
             if (width > height)
             {
-                AssociatedObject.Width = width - (width - height) * Percentage;
+                AssociatedObject.Width = width - (width - height) * Progress;
                 AssociatedObject.Height = height;
             }
             else
             {
-                AssociatedObject.Height = height - (height - width) * Percentage;
+                AssociatedObject.Height = height - (height - width) * Progress;
                 AssociatedObject.Width = width;
             }
             

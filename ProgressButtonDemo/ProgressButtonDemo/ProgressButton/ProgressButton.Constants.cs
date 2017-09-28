@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProgressButtonDemo
 {
+
     public partial class ProgressButton
     {
         private const string ProgressStatesGroupName = "ProgressStates";

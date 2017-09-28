@@ -95,18 +95,19 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Behaviors\ProgressBehavior.cs" />
     <Compile Include="Converter\BorderToStrokeThicknessConverter.cs" />
     <Compile Include="Converter\ProgressStateToPausedConverter.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ProgressButton\AdjustToSquareBehavior.cs" />
-    <Compile Include="ProgressButton\EllipseProgressBehavior.cs" />
+    <Compile Include="Behaviors\AdjustToSquareBehavior.cs" />
+    <Compile Include="Behaviors\EllipseProgressBehavior.cs" />
     <Compile Include="ProgressButton\ProgressStateChangingEventArgs.cs" />
     <Compile Include="ProgressButton\ProgressButton.Constants.cs" />
     <Compile Include="ProgressButton\ProgressButton.cs" />
     <Compile Include="ProgressButton\ProgressState.cs" />
-    <Compile Include="ProgressButton\RectangleToEllipseBehavior.cs" />
+    <Compile Include="Behaviors\RectangleToEllipseBehavior.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

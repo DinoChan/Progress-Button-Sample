@@ -128,7 +128,7 @@
                                             <DoubleAnimation BeginTime="0:0:0"
                                                              Duration="0:0:0.7"
                                                              To="1"
-                                                             Storyboard.TargetProperty="(local:AdjustToSquareBehavior.Percentage)"
+                                                             Storyboard.TargetProperty="(local:AdjustToSquareBehavior.Progress)"
                                                              Storyboard.TargetName="AdjustToSquareBehavior"
                                                              EnableDependentAnimation="True">
                                                 <DoubleAnimation.EasingFunction>
@@ -213,7 +213,7 @@
                                             <DoubleAnimation BeginTime="0:0:0"
                                                              Duration="0:0:0.7"
                                                              To="0"
-                                                             Storyboard.TargetProperty="(local:AdjustToSquareBehavior.Percentage)"
+                                                             Storyboard.TargetProperty="(local:AdjustToSquareBehavior.Progress)"
                                                              Storyboard.TargetName="AdjustToSquareBehavior"
                                                              EnableDependentAnimation="True">
                                                 <DoubleAnimation.EasingFunction>
@@ -236,7 +236,7 @@
                                     <VisualState.Setters>
                                         <Setter Target="RectangleToEllipseBehavior.(local:RectangleToEllipseBehavior.Progress)"
                                                 Value="1" />
-                                        <Setter Target="AdjustToSquareBehavior.(local:AdjustToSquareBehavior.Percentage)"
+                                        <Setter Target="AdjustToSquareBehavior.(local:AdjustToSquareBehavior.Progress)"
                                                 Value="1" />
                                         <Setter Target="ContentPresenter.(UIElement.Opacity)"
                                                 Value="0" />
@@ -251,7 +251,7 @@
                                     <VisualState.Setters>
                                         <Setter Target="RectangleToEllipseBehavior.(local:RectangleToEllipseBehavior.Progress)"
                                                 Value="1" />
-                                        <Setter Target="AdjustToSquareBehavior.(local:AdjustToSquareBehavior.Percentage)"
+                                        <Setter Target="AdjustToSquareBehavior.(local:AdjustToSquareBehavior.Progress)"
                                                 Value="1" />
                                         <Setter Target="ContentPresenter.(UIElement.Opacity)"
                                                 Value="0" />
@@ -266,7 +266,7 @@
                                     <VisualState.Setters>
                                         <Setter Target="RectangleToEllipseBehavior.(local:RectangleToEllipseBehavior.Progress)"
                                                 Value="1" />
-                                        <Setter Target="AdjustToSquareBehavior.(local:AdjustToSquareBehavior.Percentage)"
+                                        <Setter Target="AdjustToSquareBehavior.(local:AdjustToSquareBehavior.Progress)"
                                                 Value="1" />
                                         <Setter Target="ContentPresenter.(UIElement.Opacity)"
                                                 Value="0" />
@@ -282,7 +282,7 @@
                             <interactivity:Interaction.Behaviors>
                                 <local:AdjustToSquareBehavior x:Name="AdjustToSquareBehavior"
                                                               ContentElement="{Binding ElementName=InnerGrid}"
-                                                              Percentage="0" />
+                                                              Progress="0" />
                             </interactivity:Interaction.Behaviors>
                             <Grid x:Name="InnerGrid">
                                 <Rectangle x:Name="Rectangle"
