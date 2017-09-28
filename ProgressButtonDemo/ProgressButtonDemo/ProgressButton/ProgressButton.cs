@@ -64,6 +64,7 @@ namespace ProgressButtonDemo
                     ChangeStateCore(ProgressState.Started);
                     break;
                 case ProgressState.Started:
+                    ChangeStateCore(ProgressState.Ready);
                     break;
                 case ProgressState.Completed:
                     ChangeStateCore(ProgressState.Ready);
@@ -100,15 +101,22 @@ namespace ProgressButtonDemo
 
         private void ChangeStateCore(ProgressState newstate)
         {
-            if (StateChanging != null)
-            {
-                var args = new ProgressStateChangingEventArgs(this.State,newstate);
-                StateChanging(this, args);
-                if (args.Cancel)
-                    return;
-            }
+
+            var args = new ProgressStateChangingEventArgs(this.State, newstate);
+            if (args.OldValue == ProgressState.Started && args.NewValue == ProgressState.Ready)
+                args.Cancel = true;
+
+            OnStateChanging(args);
+            StateChanging?.Invoke(this, args);
+            if (args.Cancel)
+                return;
 
             State = newstate;
+        }
+
+        protected virtual void OnStateChanging(ProgressStateChangingEventArgs args)
+        {
+
         }
 
     }

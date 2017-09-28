@@ -106,7 +106,7 @@
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
                                     <VisualStateGroup.Transitions>
-                                   
+
                                         <VisualTransition From="Paused">
                                             <Storyboard>
                                                 <DoubleAnimation BeginTime="0:0:0"
@@ -164,13 +164,18 @@
     <Grid Background="#FFEEEEEE">
         <Pivot>
             <PivotItem Header="Basic">
-                <StackPanel VerticalAlignment="Center">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                     <ToggleSwitch Header="Throw Exception"
                                   OnContent="True"
                                   OffContent="False"
                                   Margin="0,0,0,20"
                                   x:Name="ThrowExceptionElement"
                                   HorizontalAlignment="Center" />
+                    <StackPanel Orientation="Horizontal" Margin="0,30" >
+                        <ProgressBar x:Name="ProgressBar" Maximum="1" Width="230"/>
+                        <Button x:Name="Button" Content="Download"
+                                Click="OnStartProgress" Margin="20,0,0,0"/>
+                    </StackPanel>
                     <local:ProgressButton Content="Download"
                                           HorizontalAlignment="Center"
                                           x:Name="ProgressButton"
@@ -271,7 +276,7 @@
                                                           HorizontalAlignment="Right"
                                                           StateChanged="OnCase3StateChanged"
                                                           StateChanging="OnCase3StateChanging" 
-                                                          Click="OnCase3Click"/>
+                                                         />
                                     <ProgressBar Grid.ColumnSpan="2"
                                                  Maximum="1"
                                                  ShowPaused="{Binding ElementName=ProgressButton,Path=State,Converter={StaticResource ProgressStateToPausedConverter}}"

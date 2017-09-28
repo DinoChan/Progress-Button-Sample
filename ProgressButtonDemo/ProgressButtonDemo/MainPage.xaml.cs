@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 // https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x804 上介绍了“空白页”项模板
 
@@ -36,6 +39,31 @@ namespace ProgressButtonDemo
                 : new MessageDialog(contents, title) { CancelCommandIndex = 0 };
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
                 CoreDispatcherPriority.Normal, async () => await dialog.ShowAsync());
+        }
+
+        private async void OnStartProgress(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            Button.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            try
+            {
+                var uiSettings = new Windows.UI.ViewManagement.UISettings();
+                Windows.UI.Color color = uiSettings.GetColorValue(UIColorType.Accent);
+                var brush = new SolidColorBrush(color);
+                ProgressBar.Foreground = brush;
+                var testService = new TestService();
+                testService.ProgressChanged += (s, args) => { ProgressBar.Value = args; };
+                await testService.Start(ThrowExceptionElement.IsOn);
+            }
+            catch (Exception ex)
+            {
+                var brush = new SolidColorBrush(Colors.PaleVioletRed);
+                ProgressBar.Foreground = brush;
+            }
+            finally
+            {
+                Button.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            }
+           
         }
 
         private async void OnStateChanged(object sender, EventArgs e)
@@ -125,7 +153,7 @@ namespace ProgressButtonDemo
                     }
                     break;
                 case ProgressState.Completed:
-                    progressButton.Content = "Open";
+                    progressButton.Content = "open";
                     await Task.Delay(TimeSpan.FromSeconds(1));
                     progressButton.State = ProgressState.Ready;
                     break;
@@ -139,7 +167,7 @@ namespace ProgressButtonDemo
             var progressButton = sender as ProgressButton;
             var item = progressButton.DataContext.ToString();
             if (e.OldValue == ProgressState.Ready && e.NewValue == ProgressState.Started &&
-                progressButton.Content == "Open")
+                progressButton.Content == "open")
             {
                 e.Cancel = true;
                 await ShowDialogAsync(string.Format("The file({0}) has been opened", item), "File Opened");
@@ -148,60 +176,54 @@ namespace ProgressButtonDemo
 
         private async void OnCase3StateChanged(object sender, EventArgs e)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
-                CoreDispatcherPriority.Normal, async () =>
-                {
-                    var progressButton = sender as ProgressButton;
-                    switch (progressButton.State)
+            var progressButton = sender as ProgressButton;
+            switch (progressButton.State)
+            {
+                case ProgressState.Ready:
+                    break;
+                case ProgressState.Started:
+                    try
                     {
-                        case ProgressState.Ready:
-                            break;
-                        case ProgressState.Started:
-                            try
-                            {
-                                var testService = progressButton.Tag as TestService;
-                                if (testService == null)
-                                {
-                                    testService = new TestService();
-                                    testService.ProgressChanged += (s, args) => { progressButton.Progress = args; };
-                                    progressButton.Tag = testService;
-                                }
-                                testService.IsPaused = false;
-                                await testService.Start();
-                                if (testService.IsCompleted)
-                                    progressButton.State = ProgressState.Completed;
-                            }
-                            catch (Exception)
-                            {
-                                progressButton.State = ProgressState.Faulted;
-                            }
-                            break;
-                        case ProgressState.Completed:
-                            break;
-                        case ProgressState.Faulted:
-                            break;
+                        var testService = progressButton.Tag as TestService;
+                        if (testService == null)
+                        {
+                            testService = new TestService();
+                            testService.ProgressChanged += (s, args) => { progressButton.Progress = args; };
+                            progressButton.Tag = testService;
+                        }
+                        testService.IsPaused = false;
+                        await testService.Start();
+                        if (testService.IsCompleted)
+                            progressButton.State = ProgressState.Completed;
                     }
-                });
+                    catch (Exception)
+                    {
+                        progressButton.State = ProgressState.Faulted;
+                    }
+                    break;
+                case ProgressState.Completed:
+                    break;
+                case ProgressState.Faulted:
+                    break;
+            }
         }
 
         private void OnCase3StateChanging(object sender, ProgressStateChangingEventArgs e)
         {
             if (e.OldValue == ProgressState.Completed && e.NewValue == ProgressState.Ready)
                 e.Cancel = true;
-        }
 
-        private void OnCase3Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            var progressButton = sender as ProgressButton;
-            var testService = progressButton.Tag as TestService;
-            if (testService != null&& testService.IsStarted==true && progressButton.State == ProgressState.Started)
+            if (e.OldValue == ProgressState.Started && e.NewValue == ProgressState.Ready)
             {
-
+                e.Cancel = false;
+                var progressButton = sender as ProgressButton;
+                var testService = progressButton.Tag as TestService;
                 testService.IsPaused = true;
-                progressButton.State = ProgressState.Ready;
                 progressButton.Content = "Restart";
             }
         }
+
+       
     }
 
 
@@ -219,6 +241,7 @@ namespace ProgressButtonDemo
         public event EventHandler<double> ProgressChanged;
 
         public bool IsPaused { get; set; }
+
         public bool IsStarted { get; private set; }
 
         public async Task Start(bool throwException = false)
@@ -226,6 +249,7 @@ namespace ProgressButtonDemo
             IsStarted = true;
             try
             {
+                ProgressChanged?.Invoke(this, _progress);
                 await Task.Delay(1000);
                 while (_progress < 1)
                 {
