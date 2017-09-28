@@ -14,7 +14,6 @@ using Windows.UI.Xaml.Media;
 
 namespace ProgressButtonDemo
 {
-    //todo ProgressState,调用API,各状态之间变换
 
     [TemplateVisualState(GroupName = ProgressStatesGroupName, Name = ReadyStateName)]
     [TemplateVisualState(GroupName = ProgressStatesGroupName, Name = StartedStateName)]
