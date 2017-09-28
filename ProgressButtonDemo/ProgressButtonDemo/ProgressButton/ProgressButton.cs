@@ -42,7 +42,6 @@ namespace ProgressButtonDemo
             if (newValue == ProgressState.Ready)
                 Progress = 0;
 
-            //this.IsHitTestVisible = this.State != ProgressState.Started;
             UpdateVisualStates(true);
 
             StateChanged?.Invoke(this, EventArgs.Empty);
@@ -72,8 +71,6 @@ namespace ProgressButtonDemo
                 case ProgressState.Faulted:
                     ChangeStateCore(ProgressState.Ready);
                     break;
-                default:
-                    break;
             }
         }
 
@@ -99,8 +96,6 @@ namespace ProgressButtonDemo
                     break;
             }
             VisualStateManager.GoToState(this, progressState, useTransitions);
-            //if (IsHitTestVisible == false && IsEnabled)
-            //    VisualStateManager.GoToState(this, "Normal", false);
         }
 
         private void ChangeStateCore(ProgressState newstate)

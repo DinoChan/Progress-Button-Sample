@@ -1,6 +1,8 @@
-﻿namespace ProgressButtonDemo
+﻿using System;
+
+namespace ProgressButtonDemo
 {
-    public class ProgressStateChangingEventArgs
+    public class ProgressStateChangingEventArgs : EventArgs
     {
         public ProgressStateChangingEventArgs(ProgressState oldValue, ProgressState newValue)
         {
