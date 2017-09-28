@@ -29,7 +29,7 @@ namespace ProgressButtonDemo
         }
 
         public event EventHandler StateChanged;
-        public event EventHandler<ExtendPropertyChangingEventArgs> StateChanging;
+        public event EventHandler<ProgressStateChangingEventArgs> StateChanging;
 
         protected override void OnApplyTemplate()
         {
@@ -107,7 +107,7 @@ namespace ProgressButtonDemo
         {
             if (StateChanging != null)
             {
-                var args = new ExtendPropertyChangingEventArgs(nameof(State));
+                var args = new ProgressStateChangingEventArgs(this.State,newstate);
                 StateChanging(this, args);
                 if (args.Cancel)
                     return;

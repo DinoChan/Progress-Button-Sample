@@ -4,8 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -28,6 +31,16 @@ namespace ProgressButtonDemo
             this.InitializeComponent();
             _testService = new TestService();
             _testService.ProgressChanged += OnProgressChanged;
+        }
+
+
+        public static async Task ShowDialogAsync(string contents, string title = null)
+        {
+            var dialog = title == null ?
+                new MessageDialog(contents) { CancelCommandIndex = 0 } :
+                new MessageDialog(contents, title) { CancelCommandIndex = 0 };
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
+                CoreDispatcherPriority.Normal, async () => await dialog.ShowAsync());
         }
 
         private void OnProgressChanged(object sender, double e)
@@ -62,6 +75,102 @@ namespace ProgressButtonDemo
                     break;
                 default:
                     break;
+            }
+        }
+
+        private async void OnCase1StateChanged(object sender, EventArgs e)
+        {
+            var progressButton = sender as ProgressButton;
+            var item = progressButton.DataContext.ToString();
+            
+            switch (progressButton.State)
+            {
+                case ProgressState.Ready:
+                    break;
+                case ProgressState.Started:
+                    try
+                    {
+                        var testService = new TestService();
+                        testService.ProgressChanged += (s, args) => {
+                            progressButton.Progress = args;
+                        };
+                        await testService.Start();
+                        progressButton.State = ProgressState.Completed;
+                    }
+                    catch (Exception ex)
+                    {
+                        progressButton.State = ProgressState.Faulted;
+                    }
+                    break;
+                //case ProgressState.Paused:
+                //    break;
+                case ProgressState.Completed:
+                   await ShowDialogAsync(string.Format("The file({0}) has been downloaded", item), "File Downloaded");
+                    break;
+                case ProgressState.Faulted:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+
+        private void OnCase1StateChanging(object sender, ProgressStateChangingEventArgs e)
+        {
+            if (e.OldValue == ProgressState.Completed && e.NewValue == ProgressState.Ready)
+                e.Cancel = true;
+        }
+
+      
+
+        private async void OnCase2StateChanged(object sender, EventArgs e)
+        {
+            var progressButton = sender as ProgressButton;
+        
+
+            switch (progressButton.State)
+            {
+                case ProgressState.Ready:
+                    break;
+                case ProgressState.Started:
+                    try
+                    {
+                        var testService = new TestService();
+                        testService.ProgressChanged += (s, args) => {
+                            progressButton.Progress = args;
+                        };
+                        await testService.Start();
+                        progressButton.State = ProgressState.Completed;
+                    }
+                    catch (Exception ex)
+                    {
+                        progressButton.State = ProgressState.Faulted;
+                    }
+                    break;
+                //case ProgressState.Paused:
+                //    break;
+                case ProgressState.Completed:
+                    progressButton.Content = "Open";
+                    await Task.Delay(TimeSpan.FromSeconds(1));
+                    progressButton.State = ProgressState.Ready;
+                    break;
+                case ProgressState.Faulted:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private async void OnCase2StateChanging(object sender, ProgressStateChangingEventArgs e)
+        {
+            var progressButton = sender as ProgressButton;
+            var item = progressButton.DataContext.ToString();
+            if (e.OldValue == ProgressState.Ready && e.NewValue == ProgressState.Started &&
+                    progressButton.Content == "Open")
+            {
+                e.Cancel = true;
+                await ShowDialogAsync(string.Format("The file({0}) has been opened", item), "File Opened");
             }
         }
     }
